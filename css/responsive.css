@@ -1,0 +1,338 @@
+@media (max-width: 991px) {
+  .navbar {
+    padding: 12px 4%;
+  }
+  .hero {
+    min-height: 320px;
+  }
+  .hero-copy {
+    padding: 35px 7%;
+  }
+  .hero-image {
+    min-height: 320px;
+  }
+  .benefits {
+    padding: 16px 4%;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .room-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .room-card:nth-child(2) {
+    order: 3;
+    grid-column: 1/-1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .room-card img {
+    height: 220px;
+  }
+  .room-card:nth-child(2) img {
+    height: 100%;
+    min-height: 220px;
+  }
+  .room-copy {
+    padding: 25px;
+  }
+  .material img {
+    height: 120px;
+  }
+  .look-feature {
+    grid-template-columns: 58% 42%;
+  }
+  .look-products {
+    padding: 22px 5%;
+  }
+  .look-photo {
+    min-height: 420px;
+  }
+  .consult {
+    grid-template-columns: 45% 55%;
+  }
+  .consult-photo {
+    min-height: 300px;
+  }
+  .instagram-grid {
+    height: 220px;
+  }
+}
+@media (max-width: 767px) {
+  .announcement {
+    font-size: 8px;
+  }
+  .announcement span {
+    padding: 0 5px;
+  }
+  .navbar {
+    padding: 14px 5%;
+  }
+  .brand {
+    font-size: 20px;
+  }
+  .nav-icons {
+    gap: 9px;
+  }
+  .hero {
+    grid-template-columns: 1fr;
+  }
+  .hero-copy {
+    padding: 42px 7%;
+    order: 2;
+  }
+  .hero-image {
+    min-height: 300px;
+    order: 1;
+  }
+  .hero h1 {
+    font-size: 37px;
+  }
+  .benefits {
+    gap: 16px 10px;
+  }
+  .section {
+    padding: 32px 5%;
+  }
+  .section-head {
+    align-items: start;
+  }
+  .section-head .btn-line {
+    min-width: 0;
+    padding: 9px 10px;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .room-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .room-card img {
+    height: 180px;
+  }
+  .room-card:nth-child(2) {
+    display: flex;
+    grid-column: auto;
+    order: initial;
+  }
+  .room-card:nth-child(2) img {
+    height: 180px;
+    min-height: 0;
+  }
+  .room-copy {
+    padding: 20px 8%;
+  }
+  .room-copy h3 {
+    font-size: 22px;
+  }
+  .room-copy p {
+    font-size: 10px;
+  }
+  .room-label {
+    font-size: 13px;
+    padding: 10px;
+  }
+  .material-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .material img {
+    height: 145px;
+  }
+  .look-feature {
+    grid-template-columns: 1fr;
+  }
+  .look-products {
+    padding: 25px 5%;
+  }
+  .look-photo {
+    min-height: 340px;
+    grid-row: 1;
+  }
+  .product-grid {
+    gap: 14px;
+  }
+  .reviews {
+    padding-top: 30px;
+  }
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+  .review {
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 18px 5%;
+  }
+  .review:last-child {
+    border-bottom: 0;
+  }
+  .consult {
+    grid-template-columns: 1fr;
+  }
+  .consult-photo {
+    min-height: 270px;
+  }
+  .consult-copy {
+    padding: 35px 7%;
+  }
+  .steps {
+    padding: 20px 5%;
+    gap: 18px;
+  }
+  .step {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+  .instagram-grid {
+    height: 190px;
+    margin-left: -5.55%;
+    margin-right: -5.55%;
+  }
+  .newsletter {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 28px 5%;
+    gap: 20px;
+  }
+  .newsletter-form {
+    width: 100%;
+  }
+  .footer-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px 18px;
+  }
+}
+@media (max-width: 480px) {
+  body {
+    font-size: 12px;
+  }
+  .announcement span:nth-child(3) {
+    display: none;
+  }
+  .nav-link {
+    font-size: 9px;
+  }
+  .hero-image {
+    min-height: 245px;
+  }
+  .hero-copy {
+    padding: 32px 6%;
+  }
+  .hero h1 {
+    font-size: 32px;
+  }
+  .hero p {
+    font-size: 12px;
+  }
+  .benefits {
+    grid-template-columns: 1fr 1fr;
+    padding: 15px 5%;
+    gap: 15px 10px;
+  }
+  .benefit .symbol {
+    font-size: 18px;
+  }
+  .benefit strong {
+    font-size: 10px;
+  }
+  .benefit small {
+    font-size: 9px;
+  }
+  .section {
+    padding: 28px 5%;
+  }
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .section-head h2 {
+    font-size: 27px;
+  }
+  .room-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .room-card img {
+    height: 145px;
+  }
+  .room-card:nth-child(2) img {
+    height: 145px;
+  }
+  .room-copy {
+    padding: 16px 12px;
+  }
+  .room-copy h3 {
+    font-size: 20px;
+  }
+  .room-copy p {
+    font-size: 10px;
+  }
+  .room-label {
+    font-size: 12px;
+    padding: 9px;
+  }
+  .material img {
+    height: 115px;
+  }
+  .material span {
+    font-size: 13px;
+  }
+  .swatches {
+    gap: 12px;
+  }
+  .swatch img {
+    width: 48px;
+    height: 43px;
+  }
+  .swatch {
+    font-size: 9px;
+  }
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+  .product img {
+    width: 44px;
+    height: 44px;
+  }
+  .look-photo {
+    min-height: 300px;
+  }
+  .consult-photo {
+    min-height: 230px;
+  }
+  .consult-copy h2 {
+    font-size: 32px;
+  }
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .step {
+    grid-template-columns: 1fr auto;
+  }
+  .instagram-grid {
+    height: 135px;
+  }
+  .footer {
+    padding: 28px 5% 14px;
+  }
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+  .footer h4 {
+    margin-bottom: 8px;
+  }
+  .footer a,
+  .footer p {
+    font-size: 10px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn-line,
+  .text-link {
+    transition: opacity 0.2s ease;
+  }
+  .btn-line:hover,
+  .text-link:hover {
+    opacity: 0.65;
+  }
+}
