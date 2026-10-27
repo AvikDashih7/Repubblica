@@ -28,6 +28,10 @@
   </head>
 
   <body>
+    <div class="cursor-fluid-glow" aria-hidden="true">
+      <canvas></canvas>
+    </div>
+
     <!-- Announcement bar -->
     <div class="announcement">
       <span>5 samples for $15</span><i class="dot"></i>
@@ -39,7 +43,7 @@
     <!-- Header -->
     <header class="header">
       <div class="nav-wrap">
-        <a class="brand" href="#"
+        <a class="logo" href="index.html"
           ><img src="images/repubblica_logo.png" alt="REPUBBLICA"
         /></a>
 
@@ -71,41 +75,346 @@
               ></a>
             </li>
             <li><a href="#inspiration">Inspiration</a></li>
+            <li class="mobile-consult">
+              <button
+                class="consult-link consult-trigger"
+                type="button"
+                aria-expanded="false"
+                aria-controls="consultPanel"
+                data-open-overlay="consultPanel"
+              >
+                Book a consultation <span class="arrow"></span>
+              </button>
+            </li>
+            <li>
+              <a
+                class="sale-link"
+                href="#materials"
+                aria-label="Sale, 10 percent off"
+              >
+                <span class="sale-text">Sale</span>
+                <span class="sale-badge">
+                  <img src="images/sale_star.png" alt="" />
+                  <b>10%</b>
+                </span>
+              </a>
+            </li>
           </ul>
-          <a class="consult-link" href="#consult"
-            >Book a consultation <span class="arrow"></span
-          ></a>
         </nav>
         <div class="nav-right">
-          <a class="sale-link" href="#materials" aria-label="Sale, 10 percent off">
-            <span class="sale-text">Sale</span>
-            <span class="sale-badge">
-              <img src="images/sale_star.png" alt="" />
-              <b>10%</b>
-            </span>
-          </a>
-          <a href="#" aria-label="Search"
+          <button
+            class="consult-link consult-trigger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="consultPanel"
+            data-open-overlay="consultPanel"
+          >
+            Book a consultation <span class="arrow"></span>
+          </button>
+          <button
+            class="icon-action"
+            type="button"
+            aria-label="Open search"
+            aria-expanded="false"
+            aria-controls="searchPanel"
+            data-open-overlay="searchPanel"
             ><i class="fa-solid fa-magnifying-glass"></i
-          ></a>
-          <a href="#" aria-label="Account"
+          ></button>
+          <button
+            class="icon-action"
+            type="button"
+            aria-label="Open account login"
+            aria-expanded="false"
+            aria-controls="loginPanel"
+            data-open-overlay="loginPanel"
             ><i class="fa-regular fa-user"></i
-          ></a>
-          <a href="#" aria-label="Bag"
-            ><i class="fa-solid fa-bag-shopping"></i
-          ></a>
+          ></button>
+          <button
+            class="icon-action cart-trigger"
+            type="button"
+            aria-label="Open shopping bag, 0 items"
+            aria-expanded="false"
+            aria-controls="cartPanel"
+            data-open-overlay="cartPanel"
+          >
+            <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+            <span class="cart-count" id="cartCount" aria-hidden="true">0</span>
+          </button>
         </div>
       </div>
     </header>
+
+    <div class="search-layer" id="searchPanel" aria-hidden="true" inert>
+      <button
+        class="overlay-scrim"
+        type="button"
+        aria-label="Close search"
+        data-close-overlay
+      ></button>
+      <section class="search-panel" aria-label="Site search">
+        <div class="search-panel-inner">
+          <button
+            class="overlay-close"
+            type="button"
+            aria-label="Close search"
+            data-close-overlay
+          >
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+          <p class="overlay-eyebrow">Find something beautiful</p>
+          <h2>What are you looking for?</h2>
+          <form class="search-form" id="siteSearchForm" role="search">
+            <label class="visually-hidden" for="siteSearchInput"
+              >Search rooms, materials and products</label
+            >
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input
+              id="siteSearchInput"
+              name="q"
+              type="search"
+              placeholder="Search rooms, materials and products"
+              autocomplete="off"
+              required
+            />
+            <button type="submit" aria-label="Search the page">
+              <span class="arrow"></span>
+            </button>
+          </form>
+          <p class="search-hint" id="searchMessage" aria-live="polite">
+            Try “bathroom”, “stone” or “tapware”.
+          </p>
+          <div class="search-results" id="searchResults"></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="login-layer" id="loginPanel" aria-hidden="true" inert>
+      <button
+        class="overlay-scrim"
+        type="button"
+        aria-label="Close login"
+        data-close-overlay
+      ></button>
+      <section
+        class="login-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="loginTitle"
+      >
+        <button
+          class="overlay-close"
+          type="button"
+          aria-label="Close login"
+          data-close-overlay
+        >
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+        <div class="login-photo" role="presentation">
+          <img src="images/look.jpg" alt="" />
+          <div class="login-photo-copy">
+            <img src="images/repubblica_logo.png" alt="REPUBBLICA" />
+            <p>Considered details.<br />A home that feels like yours.</p>
+          </div>
+        </div>
+        <div class="login-content">
+          <p class="overlay-eyebrow">Welcome back</p>
+          <h2 id="loginTitle">Sign in to your account</h2>
+          <p class="login-intro">
+            Keep your favourite finishes and inspiration close.
+          </p>
+          <form class="login-form" id="loginForm">
+            <label for="loginEmail">Email address</label>
+            <input
+              id="loginEmail"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              required
+            />
+            <label for="loginPassword">Password</label>
+            <input
+              id="loginPassword"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Enter your password"
+              required
+            />
+            <button class="btn-line btn-dark login-submit" type="submit">
+              Sign in <span class="arrow"></span>
+            </button>
+            <p class="login-message" id="loginMessage" aria-live="polite"></p>
+          </form>
+          <p class="login-note">Account sign-in is not connected in this demo.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="consult-layer" id="consultPanel" aria-hidden="true" inert>
+      <button
+        class="overlay-scrim"
+        type="button"
+        aria-label="Close consultation booking"
+        data-close-overlay
+      ></button>
+      <section
+        class="consult-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="consultTitle"
+      >
+        <button
+          class="overlay-close"
+          type="button"
+          aria-label="Close consultation booking"
+          data-close-overlay
+        >
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+        <div class="consult-dialog-photo">
+          <img src="images/consult.jpg" alt="" />
+          <div class="consult-dialog-copy">
+            <p class="overlay-eyebrow">Personal guidance</p>
+            <p>Let’s make your space feel like you.</p>
+          </div>
+        </div>
+        <div class="consult-dialog-content">
+          <p class="overlay-eyebrow">Book a consultation</p>
+          <h2 id="consultTitle">A better space starts with a conversation.</h2>
+          <p class="consult-dialog-intro">
+            Tell us a little about your project and choose how you’d like to
+            meet.
+          </p>
+          <form class="consult-form" id="consultForm">
+            <label for="consultName">Your name</label>
+            <input
+              id="consultName"
+              name="name"
+              type="text"
+              autocomplete="name"
+              placeholder="Your name"
+              required
+            />
+            <div class="consult-form-row">
+              <div>
+                <label for="consultEmail">Email address</label>
+                <input
+                  id="consultEmail"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+              <div>
+                <label for="consultPhone">Phone (optional)</label>
+                <input
+                  id="consultPhone"
+                  name="phone"
+                  type="tel"
+                  autocomplete="tel"
+                  placeholder="Your phone"
+                />
+              </div>
+            </div>
+            <div class="consult-form-row">
+              <div>
+                <label for="consultType">Consultation type</label>
+                <select id="consultType" name="type" required>
+                  <option value="">Choose one</option>
+                  <option value="showroom">Visit a showroom</option>
+                  <option value="online">Online consultation</option>
+                </select>
+              </div>
+              <div>
+                <label for="consultDate">Preferred date</label>
+                <input id="consultDate" name="date" type="date" required />
+              </div>
+            </div>
+            <label for="consultProject">What are you planning? (optional)</label>
+            <textarea
+              id="consultProject"
+              name="project"
+              rows="2"
+              placeholder="Tell us about your space or project"
+            ></textarea>
+            <button class="btn-line btn-dark consult-submit" type="submit">
+              Request a consultation <span class="arrow"></span>
+            </button>
+            <p class="consult-message" id="consultMessage" aria-live="polite"></p>
+          </form>
+          <p class="consult-demo-note">
+            This demo form doesn’t send or save your details.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <div class="cart-layer" id="cartPanel" aria-hidden="true" inert>
+      <button
+        class="overlay-scrim"
+        type="button"
+        aria-label="Close shopping bag"
+        data-close-overlay
+      ></button>
+      <section
+        class="cart-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="cartTitle"
+      >
+        <header class="cart-header">
+          <div>
+            <p class="overlay-eyebrow">Your selection</p>
+            <h2 id="cartTitle">Shopping bag <span id="cartItemLabel">(0)</span></h2>
+          </div>
+          <button
+            class="overlay-close"
+            type="button"
+            aria-label="Close shopping bag"
+            data-close-overlay
+          >
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </header>
+        <div class="cart-content">
+          <div class="cart-empty" id="cartEmpty">
+            <span class="cart-empty-icon" aria-hidden="true">
+              <i class="fa-solid fa-bag-shopping"></i>
+            </span>
+            <p class="overlay-eyebrow">A little room for something lovely</p>
+            <h3>Your bag is waiting</h3>
+            <p>Explore our curated materials and add a favourite to get started.</p>
+            <a class="btn-line btn-dark" href="#materials" data-close-overlay>
+              Explore materials <span class="arrow"></span>
+            </a>
+          </div>
+          <div class="cart-items" id="cartItems" aria-live="polite"></div>
+        </div>
+        <footer class="cart-footer" id="cartFooter" hidden>
+          <div class="cart-subtotal">
+            <span>Subtotal</span>
+            <strong id="cartSubtotal">$0.00</strong>
+          </div>
+          <p>Shipping and any applicable taxes are calculated at checkout.</p>
+          <button class="btn-line btn-dark cart-checkout" type="button" disabled>
+            Checkout unavailable in demo
+          </button>
+        </footer>
+      </section>
+    </div>
 
     <main>
       <!-- Hero -->
       <section class="banner">
         <div class="banner_cntnt">
           <div class="hilight">Curated materials for beautiful homes</div>
-          <h1>Elevate Your Space<br />With Better Finishes</h1>
+          <h1>Elevate Your Space <br/> With Better Finishes</h1>
           <p>
             Curated tiles, tapware and bathroomware for design-conscious
-            <br />renovations — sourced with care, delivered Australia-wide.
+            <br/> renovations — sourced with care, delivered Australia-wide.
           </p>
           <div class="btns">
             <a class="btn-line btn-dark" href="#rooms"
@@ -120,6 +429,11 @@
             src="images/banner_img.jpg"
             alt="Modern bathroom vanity with brass tapware"
           />
+          <div class="water-effect" aria-hidden="true">
+            <span class="water-rain water-rain--fine"></span>
+            <span class="water-rain water-rain--drops"></span>
+            <span class="water-rain water-rain--splash"></span>
+          </div>
         </div>
       </section>
 
@@ -127,28 +441,28 @@
       <section class="benefits">
         <div class="benefits-container">
           <div class="benefit">
-            <img src="images/benefit_img1.png" alt="" />
+            <img src="images/benefit_img1.png" alt="benefit image 1" />
             <div>
               <h6>5 for $15</h6>
               <p>Samples delivered to your door</p>
             </div>
           </div>
           <div class="benefit">
-            <img src="images/benefit_img2.png" alt="" />
+            <img src="images/benefit_img2.png" alt="benefit image 2" />
             <div>
               <h6>Family Owned</h6>
               <p>Australian and Owned</p>
             </div>
           </div>
           <div class="benefit">
-            <img src="images/benefit_img3.png" alt="" />
+            <img src="images/benefit_img3.png" alt="benefit image 3" />
             <div>
               <h6>Showrooms &amp; Consultations</h6>
               <p>Expert advice, in person or online</p>
             </div>
           </div>
           <div class="benefit">
-            <img src="images/benefit_img4.png" alt="" />
+            <img src="images/benefit_img4.png" alt="benefit image 4" />
             <div>
               <h6>Australia-Wide Delivery</h6>
               <p>To your door, anywhere</p>
@@ -247,8 +561,8 @@
       </section>
 
       <!-- Shop by material -->
-      <section class="section" id="materials">
-        <div class="section-head">
+      <section class="shop-materials" id="materials">
+        <div class="section-head pad-x">
           <div>
             <h2>Shop by Material</h2>
             <p>
@@ -278,26 +592,58 @@
         </div>
         <div class="material-grid track" id="materialTrack">
           <a class="material" href="#look">
-            <img
-              src="images/material-natural-stone.jpg"
-              alt="Natural stone mosaic tile"
-            />
-            <span>Natural Stone</span>
+            <div class="material-visual">
+              <img
+                src="images/material-natural-stone.jpg"
+                alt="Natural stone mosaic tile"
+              />
+              <span class="material-index">01</span>
+              <span class="material-explore"
+                >Explore material <i class="fa-solid fa-arrow-right" aria-hidden="true"></i
+              ></span>
+            </div>
+            <div class="material-caption">
+              <span>Natural Stone</span><span class="arrow"></span>
+            </div>
           </a>
           <a class="material" href="#look">
-            <img src="images/material-terrazzo.jpg" alt="Terrazzo tile" />
-            <span>Terrazzo</span>
+            <div class="material-visual">
+              <img src="images/material-terrazzo.jpg" alt="Terrazzo tile" />
+              <span class="material-index">02</span>
+              <span class="material-explore"
+                >Explore material <i class="fa-solid fa-arrow-right" aria-hidden="true"></i
+              ></span>
+            </div>
+            <div class="material-caption">
+              <span>Terrazzo</span><span class="arrow"></span>
+            </div>
           </a>
           <a class="material" href="#look">
-            <img src="images/pavers.jpg" alt="Large format pavers" />
-            <span>Pavers</span>
+            <div class="material-visual">
+              <img src="images/pavers.jpg" alt="Large format pavers" />
+              <span class="material-index">03</span>
+              <span class="material-explore"
+                >Explore material <i class="fa-solid fa-arrow-right" aria-hidden="true"></i
+              ></span>
+            </div>
+            <div class="material-caption">
+              <span>Pavers</span><span class="arrow"></span>
+            </div>
           </a>
           <a class="material" href="#look">
-            <img
-              src="images/material-kitkat.jpg"
-              alt="Vertical kit kat tiles"
-            />
-            <span>Kit Kat</span>
+            <div class="material-visual">
+              <img
+                src="images/material-kitkat.jpg"
+                alt="Vertical kit kat tiles"
+              />
+              <span class="material-index">04</span>
+              <span class="material-explore"
+                >Explore material <i class="fa-solid fa-arrow-right" aria-hidden="true"></i
+              ></span>
+            </div>
+            <div class="material-caption">
+              <span>Kit Kat</span><span class="arrow"></span>
+            </div>
           </a>
         </div>
       </section>
@@ -345,7 +691,7 @@
                       Tangier Zellige Warm Green Moroccan Look Gloss Tile
                     </p>
                     <p class="p-price">
-                      <b>$189.90</b> / m²<span class="p-box"
+                      <b>$189.90</b> / m <sup>2</sup> <span class="p-box"
                         >$102.55 / box</span
                       >
                     </p>
@@ -361,7 +707,7 @@
                       Donatella Silver Grey Terrazzo Look Tile
                     </p>
                     <p class="p-price">
-                      <b>$69.90</b> / m²<span class="p-box">$69.20/box</span>
+                      <b>$69.90</b> / m <sup>2</sup> <span class="p-box">$69.20 / box</span>
                     </p>
                   </div>
                 </div>
@@ -483,7 +829,13 @@
                 </text>
               </svg>
               <span>Rating 4.8</span>
-              <span class="stars">★★★★★</span>
+              <span class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </span>
               <span>from 500+ reviews</span>
             </p>
           </div>
@@ -508,15 +860,17 @@
 
         <div class="review-grid track" id="reviewTrack">
           <article class="review">
-            <svg class="quote" viewBox="0 0 64 56" aria-hidden="true">
-              <path
-                d="M0 0h26v26c0 14-8 24-22 30l-3-8c8-4 12-9 12-16H0zM38 0h26v26c0 14-8 24-22 30l-3-8c8-4 12-9 12-16H38z"
-              />
-            </svg>
+            <img class="quote" src="images/quot.png" alt="" aria-hidden="true" />
             <div class="review-top">
               <img class="avatar" src="images/avatar1.jpg" alt="" />
               <div>
-                <div class="stars">★★★★★</div>
+                <div class="stars">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
                 <strong>- Emma L. Melbourne VIC</strong>
               </div>
             </div>
@@ -525,20 +879,22 @@
               team is here to make every step feel simple and stress-free.”
             </p>
             <div class="google">
-              <svg viewBox="0 0 48 48" class="g-icon"><use href="#gicon" /></svg
-              >Posted on Google
+              <img src="images/g-icon.png" alt="Google" class="g-icon" />
+              Posted on Google
             </div>
           </article>
           <article class="review">
-            <svg class="quote" viewBox="0 0 64 56" aria-hidden="true">
-              <path
-                d="M0 0h26v26c0 14-8 24-22 30l-3-8c8-4 12-9 12-16H0zM38 0h26v26c0 14-8 24-22 30l-3-8c8-4 12-9 12-16H38z"
-              />
-            </svg>
+            <img class="quote" src="images/quot.png" alt="" aria-hidden="true" />
             <div class="review-top">
               <img class="avatar" src="images/avatar2.jpg" alt="" />
               <div>
-                <div class="stars">★★★★★</div>
+                <div class="stars">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
                 <strong>- Sarah M. Melbourne VIC</strong>
               </div>
             </div>
@@ -547,20 +903,22 @@
               patient from product selection through to delivery coordination.”
             </p>
             <div class="google">
-              <svg viewBox="0 0 48 48" class="g-icon"><use href="#gicon" /></svg
-              >Posted on Google
+              <img src="images/g-icon.png" alt="Google" class="g-icon" />
+              Posted on Google
             </div>
           </article>
           <article class="review">
-            <svg class="quote" viewBox="0 0 64 56" aria-hidden="true">
-              <path
-                d="M0 0h26v26c0 14-8 24-22 30l-3-8c8-4 12-9 12-16H0zM38 0h26v26c0 14-8 24-22 30l-3-8c8-4 12-9 12-16H38z"
-              />
-            </svg>
+            <img class="quote" src="images/quot.png" alt="" aria-hidden="true" />
             <div class="review-top">
               <img class="avatar" src="images/avatar3.jpg" alt="" />
               <div>
-                <div class="stars">★★★★★</div>
+                <div class="stars">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
                 <strong>- Alex R. Melbourne VIC</strong>
               </div>
             </div>
@@ -570,8 +928,8 @@
               Tony...”
             </p>
             <div class="google">
-              <svg viewBox="0 0 48 48" class="g-icon"><use href="#gicon" /></svg
-              >Posted on Google
+              <img src="images/g-icon.png" alt="Google" class="g-icon" />
+              Posted on Google
             </div>
           </article>
         </div>
@@ -614,9 +972,15 @@
             </p>
           </div>
           <div class="consult-cta">
-            <a class="text-link" href="#newsletter"
-              >Consult now <span class="arrow"></span
-            ></a>
+            <button
+              class="text-link consult-trigger"
+              type="button"
+              aria-expanded="false"
+              aria-controls="consultPanel"
+              data-open-overlay="consultPanel"
+            >
+              Consult now <span class="arrow"></span>
+            </button>
           </div>
         </div>
       </section>
@@ -759,36 +1123,36 @@
             ><span class="ico"><i class="fa-solid fa-envelope"></i></span
             >hello@repubblica.com.au</a
           >
-          <a class="ico-row" href="#"
+          <a class="ico-row" href="javascript:void(0)"
             ><span class="ico"><i class="fa-solid fa-location-dot"></i></span
             ><span>121 Newcastle Street<br />Fyshwick ACT 2609</span></a
           >
         </div>
         <div>
           <h4>Follow Us On</h4>
-          <a class="ico-row" href="#"
+          <a class="ico-row" href="javascript:void(0)"
             ><span class="ico"><i class="fa-brands fa-instagram"></i></span
             >Instagram</a
           >
-          <a class="ico-row" href="#"
+          <a class="ico-row" href="javascript:void(0)"
             ><span class="ico"><i class="fa-brands fa-facebook-f"></i></span
             >Facebook</a
           >
-          <a class="ico-row" href="#"
+          <a class="ico-row" href="javascript:void(0)"
             ><span class="ico"><i class="fa-brands fa-pinterest-p"></i></span
             >Pinterest</a
           >
-          <a class="ico-row" href="#"
+          <a class="ico-row" href="javascript:void(0)"
             ><span class="ico"><i class="fa-brands fa-youtube"></i></span
             >Youtube</a
           >
-          <a class="ico-row" href="#"
+          <a class="ico-row" href="javascript:void(0)"
             ><span class="ico"><i class="fa-brands fa-linkedin-in"></i></span
             >LinkedIn</a
           >
         </div>
       </div>
-      <div class="footer-bottom">© Repubblica. All rights reserved.</div>
+      <div class="footer-bottom">© <a href="index.html">Repubblica</a>. All rights reserved.</div>
     </footer>
 
     <!-- Back to top button -->
