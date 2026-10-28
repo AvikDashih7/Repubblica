@@ -8,6 +8,7 @@
   --muted: #77736e;
   --line: #e6e3df;
   --gold: #b38616;
+  --gold-shimmer: linear-gradient(90deg, #b08d57, #e6c27a, #b08d57);
   --maroon: #6b0f0a;
   --serif: Georgia, "Times New Roman", serif;
   --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -37,31 +38,38 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.cursor-fluid-glow {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 49;
-  width: clamp(280px, 36vw, 480px);
-  aspect-ratio: 1;
+.fluid-bg {
+  position: relative;
+  isolation: isolate;
+}
+.fluid-bg::before,
+.fluid-bg::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  border-radius: 48%;
+  filter: blur(32px);
   pointer-events: none;
-  opacity: 0;
-  transform: translate3d(-500px, -500px, 0) translate(-50%, -50%);
-  transition: opacity 0.3s ease;
-  mix-blend-mode: multiply;
-  will-change: transform, opacity;
 }
-.cursor-fluid-glow.is-active {
-  opacity: 1;
+.fluid-bg::before {
+  background:
+    radial-gradient(ellipse at 35% 45%, rgba(230, 194, 122, 0.2), transparent 48%),
+    radial-gradient(ellipse at 75% 35%, rgba(107, 15, 10, 0.06), transparent 38%);
+  animation: fluidDrift 18s ease-in-out infinite alternate;
 }
-.cursor-fluid-glow canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
+.fluid-bg::after {
+  background:
+    radial-gradient(ellipse at 72% 60%, rgba(179, 134, 22, 0.12), transparent 42%),
+    radial-gradient(ellipse at 25% 65%, rgba(230, 194, 122, 0.12), transparent 38%);
+  animation: fluidDrift 24s ease-in-out -8s infinite alternate-reverse;
 }
-@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .cursor-fluid-glow {
-    display: none;
+@keyframes fluidDrift {
+  from {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(2%, 1%, 0) scale(1.08);
   }
 }
 
@@ -239,7 +247,7 @@ button {
 }
 .head-actions .btn-line {
   margin-left: 14px;
-  padding: 18px 28px;
+  padding: 13px 28px;
 }
 .head-actions .sq-btn + .sq-btn {
   margin-left: -2px;
@@ -496,6 +504,39 @@ button {
   background-position: center bottom, center bottom;
   animation: waterRipples 1.6s ease-out infinite;
 }
+.water-ripple {
+  position: absolute;
+  z-index: 1;
+  top: 54%;
+  left: 61%;
+  width: min(42%, 360px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255, 255, 255, 0.18), transparent 68%);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+.water-ripple::before,
+.water-ripple::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  border-radius: inherit;
+  background: repeating-radial-gradient(
+    ellipse,
+    transparent 0 18px,
+    rgba(255, 255, 255, 0.34) 19px 20px,
+    transparent 21px 38px
+  );
+  -webkit-mask-image: radial-gradient(ellipse, #000 0 62%, transparent 82%);
+  mask-image: radial-gradient(ellipse, #000 0 62%, transparent 82%);
+  opacity: 0;
+  transform: scale(0.35);
+  animation: waterRippleWave 3.2s ease-out infinite paused;
+}
+.water-ripple::after {
+  animation-delay: -1.6s;
+}
 .banner_img:hover .water-effect {
   opacity: 1;
 }
@@ -504,6 +545,13 @@ button {
 }
 .banner_img:hover .water-rain--splash {
   opacity: 0.7;
+}
+.banner_img:hover .water-ripple {
+  opacity: 1;
+}
+.banner_img:hover .water-ripple::before,
+.banner_img:hover .water-ripple::after {
+  animation-play-state: running;
 }
 @keyframes waterFall {
   from {
@@ -524,6 +572,16 @@ button {
   100% {
     background-size: 100% 100%, 150% 200%;
     opacity: 0;
+  }
+}
+@keyframes waterRippleWave {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.35);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.15);
   }
 }
 
@@ -1292,7 +1350,7 @@ button {
 .email-row input {
   flex: 1;
   min-width: 0;
-  padding: 20px 22px;
+  padding: 13px 22px;
   border: 0;
   background: #fff;
   font: inherit;
@@ -1508,41 +1566,22 @@ button {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    110deg,
-    #111 0%,
-    #111 30%,
-    #8d6813 45%,
-    #e6c27a 52%,
-    #8d6813 60%,
-    #111 78%,
-    #111 100%
-  );
-  background-size: 250% 100%;
+  background: var(--gold-shimmer);
+  background-size: 200% 100%;
   background-position: 100% 50%;
   transform: translateY(101%);
   transition: transform 0.45s var(--ease);
   z-index: -1;
 }
 
-.btn-line:hover::before {
+.btn-line:hover::before,
+.btn-line:focus-visible::before {
   transform: translateY(0);
   animation: buttonGradientWave 2.2s linear 0.35s infinite;
 }
-.btn-line.btn-dark::before {
-  background-image: linear-gradient(
-    110deg,
-    #111 0%,
-    #111 30%,
-    #8d6813 45%,
-    #e6c27a 52%,
-    #8d6813 60%,
-    #111 78%,
-    #111 100%
-  );
-}
-.btn-line.btn-dark:hover {
-  color: #fff !important;
+.btn-line:hover,
+.btn-line:focus-visible {
+  color: #111 !important;
 }
 
 button:where(:not(.btn-line):not(.overlay-scrim)) {
@@ -1560,17 +1599,8 @@ button:where(:not(.btn-line):not(.overlay-scrim))::before {
   z-index: -1;
   inset: 0;
   content: "";
-  background: linear-gradient(
-    110deg,
-    #111 0%,
-    #111 30%,
-    #8d6813 45%,
-    #e6c27a 52%,
-    #8d6813 60%,
-    #111 78%,
-    #111 100%
-  );
-  background-size: 250% 100%;
+  background: var(--gold-shimmer);
+  background-size: 200% 100%;
   background-position: 100% 50%;
   opacity: 0;
   pointer-events: none;
@@ -1581,7 +1611,7 @@ button:where(:not(.btn-line):not(.overlay-scrim)):focus-visible::before {
   animation: buttonGradientWave 2.2s linear infinite;
 }
 button:where(:not(.btn-line):not(.overlay-scrim)):hover {
-  color: #fff;
+  color: #111;
 }
 .nav-toggle:hover span {
   background: #fff;
@@ -1606,7 +1636,7 @@ button:where(:not(.btn-line):not(.overlay-scrim)):hover {
 }
 
 .btn-line:hover .arrow {
-  background-color: #fff;
+  background-color: #111;
 }
 
 .sq-btn:hover .arrow.left {
@@ -1630,7 +1660,7 @@ button:where(:not(.btn-line):not(.overlay-scrim)):hover {
 }
 
 .sq-btn:hover .arrow {
-  background-color: #fff;
+  background-color: #111;
 }
 .sq-btn:active,
 .btn-line:active {
